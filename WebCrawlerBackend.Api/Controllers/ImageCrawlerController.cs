@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -25,7 +26,7 @@ namespace WebCrawlerBackend.Api.Controllers
             try
             {
                 //TODO: move images name folder to config
-                var images = _imagesCrawler.GetImages(new Core.Crawler.CrawlerInput(_hostingEnvironment.WebRootPath, "Images", url));
+                var images = _imagesCrawler.GetImages(new Core.Crawler.CrawlerInput(_hostingEnvironment.WebRootPath ?? Path.Combine(Directory.GetCurrentDirectory(), "wwwroot"), "Images", url));
                 var files = images.Select(i => i.ImagePath);
                 return Ok(files);
             }
